@@ -261,6 +261,8 @@ statement
     | RESET configKey                                                  #resetQuotedConfiguration
     | RESET .*?                                                        #resetConfiguration
     | unsupportedHiveNativeCommands .*?                                #failNativeCommand
+    | COMPACT TABLE target=tableIdentifier partitionSpec?
+      (INTO fileNume=INTEGER_VALUE FILES)?                             #compactTable
     ;
 
 configKey
@@ -1119,6 +1121,7 @@ ansiNonReserved
     | EXTRACT
     | FIELDS
     | FILEFORMAT
+    | FILES
     | FIRST
     | FOLLOWING
     | FORMAT
@@ -1527,6 +1530,7 @@ nonReserved
     | WITH
     | YEAR
     | ZONE
+    | FILES
 //--DEFAULT-NON-RESERVED-END
     ;
 
@@ -1796,6 +1800,7 @@ WINDOW: 'WINDOW';
 WITH: 'WITH';
 YEAR: 'YEAR';
 ZONE: 'ZONE';
+FILES: 'FILES';
 //--SPARK-KEYWORD-LIST-END
 //============================
 // End of the keywords list

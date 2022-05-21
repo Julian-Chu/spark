@@ -640,4 +640,10 @@ class SparkSqlAstBuilder extends AstBuilder {
   override def visitShowVersion(ctx: ShowVersionContext): LogicalPlan = withOrigin(ctx) {
     ShowVersionCommand()
   }
+
+  override def visitCompactTable(ctx: CompactTableContext): LogicalPlan = withOrigin(ctx){
+      val table: TableIdentifier = visitTableIdentifier(ctx.tableIdentifier())
+      val fileNum: Option[Int] = ctx.INTEGER_VALUE().getText.toInt
+      CompactTableCommand(table, fileNum)
+  }
 }
