@@ -641,9 +641,9 @@ class SparkSqlAstBuilder extends AstBuilder {
     ShowVersionCommand()
   }
 
-  override def visitCompactTable(ctx: CompactTableContext): LogicalPlan = withOrigin(ctx){
+  override def visitCompactTable(ctx: CompactTableContext): LogicalPlan = withOrigin(ctx) {
       val table: TableIdentifier = visitTableIdentifier(ctx.tableIdentifier())
-      val fileNum: Option[Int] = ctx.INTEGER_VALUE().getText.toInt
+      val fileNum: Option[Int] = Option(ctx.INTEGER_VALUE().getText.toInt)
       CompactTableCommand(table, fileNum)
   }
 }
